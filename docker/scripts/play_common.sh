@@ -169,7 +169,8 @@ function start_game() {
 
     [ -f "$MAP_DIR/replays/LastReplay.rep" ] && rm "$MAP_DIR/replays/LastReplay.rep"
 
-    update_registry
+    # Now done at container build time
+    #update_registry
 
     # Launch the game!
     LOG "Starting game" >> "$LOG_GAME"
