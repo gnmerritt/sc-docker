@@ -40,13 +40,10 @@ if [ "$IS_HEADFUL" == "1" ]; then
     start_gui
 fi
 start_bot
-sleep 1
 
 start_game "$@"
-sleep 3
 
 connect_bot
-sleep 1
 
 if [ "$IS_HEADFUL" == "1" ] && [ $NTH_PLAYER == "0" ] && [ "$HEADFUL_AUTO_LAUNCH" == "1" ]; then # if is_server
     auto_launch
