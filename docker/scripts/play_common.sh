@@ -105,6 +105,8 @@ function connect_bot() {
         if [ "$BOT_TYPE" == "dll" ] && [ -f "$BWAPI_DATA_DIR/AI/run_connect.bat" ]; then
             LOG "Running run_connect.bat for Module bot *AFTER* game has started." >> "$LOG_BOT"
             WINEPATH="$JAVA_DIR/bin" wine cmd /c "$BWAPI_DATA_DIR/AI/run_connect.bat" >> "${LOG_BOT}" 2>&1
+
+            sleep 1
         fi
 
         popd
@@ -156,6 +158,8 @@ function start_bot() {
         popd
     } &
 
+    sleep 1
+
     . hook_after_bot_start.sh
 
 }
@@ -165,13 +169,17 @@ function start_game() {
 
     [ -f "$MAP_DIR/replays/LastReplay.rep" ] && rm "$MAP_DIR/replays/LastReplay.rep"
 
-    update_registry
+    # Now done at container build time
+    #update_registry
 
     # Launch the game!
     LOG "Starting game" >> "$LOG_GAME"
     echo "------------------------------------------" >> "$LOG_GAME"
 
     launch_game "$@" >> "$LOG_GAME" 2>&1  &
+
+    # Wait up to 30s for game to be started
+    run_with_timeout 30 detect_game_started
 
     . hook_after_game_start.sh
 }
@@ -205,6 +213,19 @@ function check_bot_requirements() {
         LOG "Bot type can be only one of 'jar', 'exe', 'dll', 'jython' but the type supplied is '$BOT_TYPE'"
         exit 1
     fi
+}
+
+function detect_game_started() {
+    while true
+    do
+        if pgrep -x "StarCraft.exe" > /dev/null
+        then
+            LOG "Game started!" >> "$LOG_GAME"
+            return 0
+        fi
+
+        sleep 0.5
+    done;
 }
 
 function detect_game_finished() {
