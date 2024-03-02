@@ -1,5 +1,5 @@
 # Basic images to build up X server with wine.
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 LABEL maintainer="Michal Sustr <michal.sustr@aic.fel.cvut.cz>"
 
 ENV APP_DIR /app
@@ -52,15 +52,14 @@ RUN set -x \
   && apt-get update \
   && apt-get install wget gnupg2 software-properties-common -y \
   && dpkg --add-architecture i386 \
-  && wget -nc https://dl.winehq.org/wine-builds/winehq.key \
-  && wget -nc https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_20.04/Release.key \
-  && apt-key add winehq.key \
-  && apt-key add Release.key \
-  && apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' \
-  && add-apt-repository 'deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_20.04/ ./' \
+  && mkdir -pm755 /etc/apt/keyrings \
+  && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
+  && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources \
   && apt-get update -y \
-  && apt-get install -y --no-install-recommends xvfb xauth x11vnc winehq-stable winetricks unzip \
-  # wine32 winetricks ca-certificates winbind \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xvfb xauth x11vnc winehq-stable unzip cabextract \
+  && wget https://github.com/Winetricks/winetricks/raw/master/src/winetricks \
+  && chmod +x winetricks \
+  && mv -v winetricks /usr/local/bin \
   && rm -rf /var/lib/apt/lists/*
 
 COPY scripts/winegui /usr/bin/winegui

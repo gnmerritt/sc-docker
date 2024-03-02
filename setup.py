@@ -8,7 +8,7 @@ from setuptools import setup
 from scbw.defaults import VERSION
 
 setup(
-    name='scbw',
+    name='basil-scbw',
     version=VERSION,
     description='Multi-platform Version of StarCraft: Brood War in a Docker Container',
     long_description="This repository contains fully working StarCraft game running in Wine "
