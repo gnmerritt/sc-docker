@@ -22,7 +22,7 @@ def check_map_exists(map_file: str) -> None:
 def download_sscait_maps(map_dir: str) -> None:
     logger.info("downloading maps from SSCAI")
     download_extract_zip(
-        "http://sscaitournament.com/files/sscai_map_pack.zip", map_dir
+        "https://github.com/basil-ladder/sc-docker/releases/download/sscai_map_pack/sscai_map_pack.zip", map_dir
     )
 
 def download_season_maps(map_dir: str) -> None:
