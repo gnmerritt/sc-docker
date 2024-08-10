@@ -1,6 +1,5 @@
-FROM starcraft:play
+FROM --platform=linux/amd64 starcraft:play
 LABEL maintainer="Michal Sustr <michal.sustr@aic.fel.cvut.cz>"
-
 
 ENV JAVA_DIR="$APP_DIR/java"
 

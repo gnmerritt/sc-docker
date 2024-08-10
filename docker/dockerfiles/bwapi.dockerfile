@@ -1,4 +1,4 @@
-FROM starcraft:wine
+FROM --platform=linux/amd64 starcraft:wine
 LABEL maintainer="Michal Sustr <michal.sustr@aic.fel.cvut.cz>"
 
 ENV SC_DIR="$APP_DIR/sc"

@@ -1,4 +1,4 @@
-FROM starcraft:bwapi
+FROM --platform=linux/amd64 starcraft:bwapi
 LABEL maintainer="Michal Sustr <michal.sustr@aic.fel.cvut.cz>"
 
 USER starcraft

@@ -1,4 +1,4 @@
-FROM starcraft:java
+FROM --platform=linux/amd64 starcraft:java
 LABEL maintainer="Michal Sustr <michal.sustr@aic.fel.cvut.cz>"
 
 #####################################################################

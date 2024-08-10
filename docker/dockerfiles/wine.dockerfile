@@ -1,21 +1,21 @@
 # Basic images to build up X server with wine.
-FROM ubuntu:22.04
+FROM --platform=linux/amd64 ubuntu:22.04
 LABEL maintainer="Michal Sustr <michal.sustr@aic.fel.cvut.cz>"
 
-ENV APP_DIR /app
-ENV LOG_DIR $APP_DIR/logs
+ENV APP_DIR=/app
+ENV LOG_DIR=$APP_DIR/logs
 # Disable stupid install of mono/gecko, we don't need that
 ENV WINEDLLOVERRIDES="mscoree,mshtml="
 # Wine path
-ENV WINEPREFIX /home/starcraft/.wine
+ENV WINEPREFIX=/home/starcraft/.wine
 # Make sure to run 32bit windows
-ENV WINEARCH win32
+ENV WINEARCH=win32
 # X display
-ENV DISPLAY :0.0
+ENV DISPLAY=:0.0
 # Make possible to use custom title bars
-ENV WINEGUI_TITLEBAR "docker"
+ENV WINEGUI_TITLEBAR="docker"
 ARG STARCRAFT_UID=1000
-ENV BASE_VNC_PORT 5900
+ENV BASE_VNC_PORT=5900
 
 EXPOSE $BASE_VNC_PORT
 
@@ -79,5 +79,5 @@ VOLUME $LOG_DIR
 # Let's run some command that will make sure the first init runs.
 #
 # windows doesn't have sleep, but this hack seems to work :-)
+RUN winetricks autostart_winedbg=disabled
 RUN set -eux && xvfb-run wine ping 127.0.0.1 -n 1 | cat
-
