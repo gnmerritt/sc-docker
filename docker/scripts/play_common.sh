@@ -93,7 +93,7 @@ function start_gui() {
     sleep 1
 
     LOG "Starting VNC server" "$LOG_XVNC"
-    x11vnc -forever -nopw -display :0 >> "$LOG_XVNC" 2>&1 &
+    x0vncserver -localhost no -SecurityTypes None -display :0 --I-KNOW-THIS-IS-INSECURE >> "$LOG_XVNC" 2>&1 &
     sleep 1
 }
 

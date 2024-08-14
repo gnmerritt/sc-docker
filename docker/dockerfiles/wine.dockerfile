@@ -56,7 +56,7 @@ RUN set -x \
   && wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key \
   && wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources \
   && apt-get update -y \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xvfb xauth x11vnc winehq-stable unzip cabextract \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xvfb xauth tigervnc-scraping-server winehq-stable unzip cabextract \
   && wget https://github.com/Winetricks/winetricks/raw/master/src/winetricks \
   && chmod +x winetricks \
   && mv -v winetricks /usr/local/bin \
